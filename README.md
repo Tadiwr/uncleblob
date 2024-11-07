@@ -2,7 +2,7 @@
 
 Uncle Blob, is a self hosted object store. Its light, fast and super simple to set up and get going and **written in RUST** 
 
-To start the server run the following command
+To start the server run the following command, and customize the server to your liking.
 
     $ cargo run build
 
@@ -10,16 +10,16 @@ To start the server run the following command
 
 ## Inspiration
 
-At times, as developers our projects usually start very small, that the need to sign up for an object store in on the cloud like S3 or Azure Blob Store which can cost money and can be a pain in arse. There sometimes you need to just get a quick self hosted solution as you are developing your app. When you are now ready for production you can switch to a cloud solution.
+At times, as developers our projects usually start very small, that the is no need to sign up for an object store in on the cloud like S3 or Azure Blob Store which can cost money and can be a pain in arse. Sometimes you need to just get a quick self hosted solution as you are developing your app. When you are now ready for production you can switch to a cloud solution.
 
-At the same time you might actually not want a cloud solution at all. A reason for this could be how costs for cloud services can go crazy and can be unpredictable. I have heard of folks who have woken with their cloud bills at $130k. Therefore in order to save cost or just have almost constant costs you could just want a self hosted system. This is where Uncle Blob comes in.
+At the same time you might actually not want a cloud solution at all. A reason for this could be how costs for cloud services can go crazy and can be unpredictable. I have heard of folks who have woke up with their cloud bills at $130k. Therefore in order to save cost or just have almost constant costs you could just want a self hosted system maybe running on a VPS. This is where Uncle Blob comes in.
 
 ## How It Works
 The smallest unit of data is called a blob. A blob represents any form of data in binary form like a picture could in .png or .jpg format. This data is in its binary form!
 
 Blobs are then grouped to form buckets. Buckets help better oragnise the grouping blobs.
 
-> Note that the file server its selfs doesn't create seperate directories for each bucket
+> Note that the file server doesn't create seperate directories for each bucket
 
 ![alt text](image.png)
 
@@ -80,4 +80,18 @@ An example fetch request
         });
     }
 
+```
+
+The server will return information about the newly uploaded blob object. For an exmple request
+
+> http://localhost:5050/storage/upload/logos/eggstra.png
+
+The server will respond with 
+
+``` json
+    {
+        fileName: "eggstra.png",
+        bucketName: "logos",
+        url: "http://127.0.0.1:5050/storage/logos/eggstra.png"
+    }
 ```
