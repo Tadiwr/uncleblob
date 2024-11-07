@@ -25,6 +25,7 @@ async fn upload(path: web::Path<(String, String)>, payload: web::Bytes) -> impl 
     match res {
         Ok(blob) => {
             return HttpResponse::Ok()
+            .append_header(("Content-Type", "application/json"))
             .body(blob.to_json());
         }
 

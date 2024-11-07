@@ -84,14 +84,14 @@ An example fetch request
 
 The server will return information about the newly uploaded blob object. For an exmple request
 
-> http://localhost:5050/storage/upload/logos/eggstra.png
+> http://localhost:5050/storage/upload/wallpapers/wally.jpg
 
 The server will respond with 
 
 ``` json
     {
-        fileName: "eggstra.png",
-        bucketName: "logos",
-        url: "http://127.0.0.1:5050/storage/logos/eggstra.png"
+        "fileName": "wally.jpg",
+        "bucketName": "wallpapers",
+        "url": "http://127.0.0.1:5050/storage/wallpapers/wally.jpg"
     }
 ```

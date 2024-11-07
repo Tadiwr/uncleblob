@@ -42,7 +42,7 @@ impl Blob {
     
     pub fn to_json(&self) -> String {
         format!(
-            "{{\n   fileName: \"{}\",\n    bucketName: \"{}\",\n    url: \"{}\"\n}}",
+            "{{\n\"fileName\": \"{}\",\"bucketName\":\"{}\",\"url\": \"{}\"\n}}",
             self.file_name,
             self.bucket_name,
             self.get_blob_url()
