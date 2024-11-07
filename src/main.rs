@@ -1,6 +1,8 @@
 use providers::storage::api::{get, put};
 
+
 mod providers;
+mod models;
 
 fn main() {
     let str = "Hie\nMy name is Tadiwanashe Shangwa\nI'm 18";
@@ -20,9 +22,9 @@ fn main() {
     }
 
 
-    match get("tadiwax.txt", "documents") {
-        Ok(buff) => {
-            println!("{}", String::from_utf8(buff).unwrap());
+    match get("tadiwa.txt", "documents") {
+        Ok(blob) => {
+            println!("URL for resource: {}", blob.get_blob_url());
         }
 
         Err(err) => {

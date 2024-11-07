@@ -1,5 +1,7 @@
 use std::{fs::{self, File}, io::{Read, Write}};
 
+use crate::models::blob::Blob;
+
 use super::utils::{get_store_path, initialise_store};
 
 
@@ -13,7 +15,7 @@ blobstore.
     `.blobstore/<bucket_name>::<filename>.<ext>`
  */
 
-pub fn put(file_name: &str, bucket_name: &str, buffer: Vec<u8>)  -> Result<(), String>{
+pub fn put(file_name: &str, bucket_name: &str, buffer: Vec<u8>)  -> Result<Blob, String>{
 
     initialise_store();
     
@@ -31,7 +33,11 @@ pub fn put(file_name: &str, bucket_name: &str, buffer: Vec<u8>)  -> Result<(), S
 
         file.write_all(&buffer).unwrap();
 
-        return Ok(());
+        return Ok(Blob::new(
+            file_name.to_string(),
+            bucket_name.to_string(),
+            buffer
+        ));
     }
 }
 
@@ -45,7 +51,7 @@ pub fn put(file_name: &str, bucket_name: &str, buffer: Vec<u8>)  -> Result<(), S
     `.blobstore/<bucket_name>::<filename>.<ext>`
  */
 
- pub fn get(file_name: &str, bucket_name: &str)  -> Result<Vec<u8>, String>{
+ pub fn get(file_name: &str, bucket_name: &str)  -> Result<Blob, String>{
 
     initialise_store();
     
@@ -59,7 +65,11 @@ pub fn put(file_name: &str, bucket_name: &str, buffer: Vec<u8>)  -> Result<(), S
 
         file.read_to_end(&mut buff).unwrap();
 
-        return Ok(buff);
+        return Ok(Blob::new(
+            file_name.to_string(),
+            bucket_name.to_string(),
+            buff
+        ));
        
     } else {
         
