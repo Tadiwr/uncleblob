@@ -37,4 +37,15 @@ impl Blob {
             &self.file_name
         );
     }
+
+    /* Serielizes blob object into json */
+    
+    pub fn to_json(&self) -> String {
+        format!(
+            "{{\n   fileName: \"{}\",\n    bucketName: \"{}\",\n    url: \"{}\"\n}}",
+            self.file_name,
+            self.bucket_name,
+            self.get_blob_url()
+        )
+    }
 }
