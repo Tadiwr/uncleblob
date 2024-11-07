@@ -2,9 +2,11 @@
 
 Uncle Blob, is a self hosted object store. Its light, fast and super simple to set up and get going and **written in RUST** 
 
-To start the server run the following command, and customize the server to your liking.
+To start the server run the following command
 
     $ cargo run build
+
+If you want to customize uncle blob you are free to fork it!
 
 > The name 'Uncle Blob' is a combination of the famous clean code author Uncle Bob and the word 'Blob' which means Binary Large Object
 
@@ -95,3 +97,41 @@ The server will respond with
         "url": "http://127.0.0.1:5050/storage/wallpapers/wally.jpg"
     }
 ```
+
+## Overwriting a blob
+
+There are certain situations where you want to overwrite data that is already in an exisiting blob, for example if you were building a cloud word editor like google docs. The API usage is as follows
+
+> PUT /storage/upload/{bucket_name}/{file_name}
+
+In this case the url is the same it's just that this time the HTTP verb will be PUT not POST, to signify that data is being 
+overwritten. 
+
+The server will respond with (example data)
+
+``` json
+    {
+        "fileName": "wally.jpg",
+        "bucketName": "wallpapers",
+        "url": "http://127.0.0.1:5050/storage/wallpapers/wally.jpg"
+    }
+```
+
+## Deleting Blobs
+
+Lastly we will look at deleting blobs. Uncle Blob under the hood makes use of a quite delete. Which means that if the blob doesn't exist it will simply ignore the request instead of throwing an error. I personally thought this would make error handling so much easier. you can always adjust this to your liking.
+
+Just to be very sure, if the quiet delete was successful, a 200 response is sent back
+
+> DELETE /storage/delete/{bucket_name}/{file_name}
+
+
+# Importing Considerations
+
+- Uncle Blob is not a mature project, so there could be issues or even areas where the project can be improved. Please feel free to open issues or even contribute.
+
+- Uncle Blob is also relatively new therefore I would highly recommend that you throughly test it, beyond the testing that I did, to ensure that it works perefectly if you want to use it in production!
+
+- Uncle Blob by default, has no authentication built in. You might want to fork it and customize it to add authentication and authorization.
+
+> Authentication is definately something I would love to add eventually, maybe with a new CLI tool to do so! If you have any ideas feel free to reach in!
