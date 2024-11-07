@@ -1,35 +1,50 @@
-use providers::storage::api::{get, put};
-
+use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
+use models::blob;
+use providers::{storage, utils::serverutils::{get_server_address, get_server_port}};
 
 mod providers;
 mod models;
 
-fn main() {
-    let str = "Hie\nMy name is Tadiwanashe Shangwa\nI'm 18";
+#[get("/")] 
+async fn index() -> impl Responder {
+    return format!("Hie Im Uncle Blob, your self hosted object store!");
+}
 
-    match put(
-        "tadiwa.txt",
-        "documents",
-        str.as_bytes().to_vec()
-    ) {
-        Ok(_) => {
-            println!("File saved successfuly");
-        }
+#[get("/storage/{bucket_name}/{file_name}")] 
+async fn retrieve_file(path: web::Path<(String, String)>) -> impl Responder {
 
-        Err(err) => {
-            println!("{}", err);
-        }
-    }
+    let (bucket_name, file_name) = path.into_inner();
+    let res = storage::api::get(file_name.as_str(), bucket_name.as_str());
 
-
-    match get("tadiwa.txt", "documents") {
+    match res {
         Ok(blob) => {
-            println!("URL for resource: {}", blob.get_blob_url());
+            return HttpResponse::Ok()
+                .body(blob.buff);
         }
 
         Err(err) => {
-            println!("{}", err);
+            return HttpResponse::Accepted().body(err);
         }
     }
+}
+
+
+#[actix_web::main]
+async fn main() -> Result<(), std::io::Error> {
+
+    let addr = get_server_address();
+    let port = get_server_port();
+
+    println!("Server running at http://{}:{}", addr, port);
+
+    HttpServer::new(|| {
+        App::new()
+        .service(index)
+        .service(retrieve_file)
+    })
+        .bind((addr, port)).unwrap()
+        .run()
+        .await
+
 }
 

@@ -4,6 +4,6 @@ pub fn get_server_address() -> String {
 }
 
 /** Returns the PORT the server is listening to */
-pub fn get_server_port() -> u32 {
+pub fn get_server_port() -> u16 {
     return 5050;
 }
