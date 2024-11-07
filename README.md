@@ -2,7 +2,11 @@
 
 Uncle Blob, is a self hosted object store. Its light, fast and super simple to set up and get going and **written in RUST** 
 
-    The name 'Uncle Blob' is a combination of the famous clean code author Uncle Bob and the word 'Blob' which means Binary Large Object
+To start the server run the following command
+
+    $ cargo run build
+
+> The name 'Uncle Blob' is a combination of the famous clean code author Uncle Bob and the word 'Blob' which means Binary Large Object
 
 ## Inspiration
 
@@ -15,7 +19,7 @@ The smallest unit of data is called a blob. A blob represents any form of data i
 
 Blobs are then grouped to form buckets. Buckets help better oragnise the grouping blobs.
 
-    Note that the file server its selfs doesn't create seperate directories for each bucket
+> Note that the file server its selfs doesn't create seperate directories for each bucket
 
 ![alt text](image.png)
 
@@ -29,14 +33,14 @@ A REST HTTP server listens for requests from client applications like a website 
 
 ### Getting blobs (Retrieval)
 
-    GET /storage/{bucket_name}/{file_name}
+> GET /storage/{bucket_name}/{file_name}
 
 - the bucket_name is the name of the bucket
 - the file_name is the name of the file (including its extension e.g. tadiwa.png)
 
 An example request would be like so
 
-    GET /storage/avatars/user-345.png
+> GET /storage/avatars/user-345.png
 
 The server returns the blob in its binary, so if you where serving this on a web page, assuming uncle blob is listening on localhost:5050
 
@@ -53,9 +57,9 @@ The server returns the blob in its binary, so if you where serving this on a web
 
 ### Uploading a blob
 
-    POST /storage/upload/{bucket_name}/{file_name}
+> POST /storage/upload/{bucket_name}/{file_name}
 
-    Body: The blob to be uploaded
+> Body: The blob to be uploaded
 
 - the bucket_name is the name of the bucket
 - the file_name is the name of the file to be uploaded(including its extension e.g. tadiwa.png)
